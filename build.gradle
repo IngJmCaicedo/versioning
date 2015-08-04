@@ -1,8 +1,8 @@
-apply plugin: 'java'
-
 plugins {
     id 'net.researchgate.release' version '2.1.2'
 }
+apply plugin: 'java'
+apply plugin: 'maven'
 
 release {
     failOnCommitNeeded = true
@@ -18,10 +18,10 @@ release {
     tagTemplate = '${version}'
     versionPropertyFile = 'gradle.properties'
     versionProperties = []
-    buildTasks = ['build']
-    versionPatterns = [
-            /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1] as int) + 1}${m[0][2]}") }
-    ]
+//    buildTasks = ['build']
+//    versionPatterns = [
+//            /(\d+)([^\d]*$)/: { Matcher m, Project p -> m.replaceAll("${(m[0][1] as int) + 1}${m[0][2]}") }
+//    ]
     scmAdapters = [
             net.researchgate.release.GitAdapter
 //            net.researchgate.release.SvnAdapter,
@@ -43,6 +43,21 @@ release {
 
 repositories {
     mavenCentral()
+    maven {
+        url "http://localhost:8081/nexus/content/repositories/releases"
+        credentials {
+            username 'deployment'
+            password 'deployment123'
+        }
+    }
+
+    maven {
+        url "http://localhost:8081/nexus/content/repositories/snapshots"
+        credentials {
+            username 'deployment'
+            password 'deployment123'
+        }
+    }
 }
 
 dependencies {

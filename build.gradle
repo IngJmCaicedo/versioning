@@ -4,8 +4,6 @@ plugins {
 apply plugin: 'java'
 apply plugin: 'maven'
 
-afterReleaseBuild.dependsOn uploadArchives
-
 release {
     failOnCommitNeeded = true
     failOnPublishNeeded = true
@@ -59,6 +57,8 @@ uploadArchives {
         }
     }
 }
+
+afterReleaseBuild.dependsOn uploadArchives
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'

@@ -52,10 +52,19 @@ repositories {
     }
 
     maven {
-        url "http://localhost:8081/nexus/content/repositories/snapshots"
+        url "http://localhost:8081/nexus/content/repositories/snapshots/"
         credentials {
             username 'deployment'
             password 'deployment123'
+        }
+    }
+
+    mavenDeployer {
+        repository(url: "http://localhost:8081/nexus/content/repositories/releases") {
+            authentication(userName: 'deployment', password: 'deployment123')
+        }
+        snapshotRepository(url: "http://localhost:8081/nexus/content/repositories/snapshots") {
+            authentication(userName: 'deployment', password: 'deployment123')
         }
     }
 }
